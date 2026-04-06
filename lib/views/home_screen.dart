@@ -50,8 +50,8 @@ class HomeScreen extends StatelessWidget {
               label: "User"),
         ],
         
-        selectedIconTheme: const IconThemeData(color:Colors.greenAccent ,size:24),
-        unselectedIconTheme: const IconThemeData(size:38)
+        selectedIconTheme: const IconThemeData(size:24, color:Color.fromARGB(255, 118, 121, 115)),
+        unselectedIconTheme: const IconThemeData()
       ),
     );
   }
