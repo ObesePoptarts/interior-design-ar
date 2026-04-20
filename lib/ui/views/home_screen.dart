@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'catalog_tab.dart'; // Import the file you just created
-// You will create these other files next (see below)
+import 'catalog_tab.dart';
 import 'home_tab.dart'; 
 import 'ar_screen.dart';
 import 'user_tab.dart';
@@ -15,11 +14,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  // This list holds all your main pages
   final List<Widget> _pages = [
     const HomeTab(),
     const ArScreen(),
-    CatalogTab(), // This is the CatalogTab you created in the previous step
+    CatalogTab(), 
     const UserTab(),
   ];
 
@@ -30,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-        type: BottomNavigationBarType.fixed, // Essential if you have 4+ items
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         items: const [

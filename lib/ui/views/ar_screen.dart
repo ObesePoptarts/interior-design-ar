@@ -46,14 +46,14 @@ class _ArScreenState extends State<ArScreen> {
   }
   void onPlaneOrPointTapped(List<ARHitTestResult> hitTestResults) {
     if (hitTestResults.isNotEmpty) {
-      // Get the first result (the closest one to the camera)
+      
       ARHitTestResult hit = hitTestResults.first;
       
       var newNode = ARNode(
         type: NodeType.webGLB,
         uri: widget.modelUrl ?? "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
         scale: vector.Vector3(0.2, 0.2, 0.2),
-        // Use the hit result's world transform to place the object exactly where you tapped
+        
         position: vector.Vector3(
           hit.worldTransform.getColumn(3).x,
           hit.worldTransform.getColumn(3).y,

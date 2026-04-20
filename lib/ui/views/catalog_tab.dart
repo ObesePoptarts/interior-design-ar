@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/catalog_viewmodel.dart';
-import 'ar_screen.dart'; // Add this line!
-import 'package:file_picker/file_picker.dart'; // Add this import
-import '../../data/services/database_service.dart'; // Fixes Error 2 (Adjust path if needed!)
+import 'ar_screen.dart';
+import 'package:file_picker/file_picker.dart';
+import '../../data/services/database_service.dart';
 
 class CatalogTab extends StatelessWidget {
   const CatalogTab({super.key});
@@ -38,8 +38,7 @@ class CatalogTab extends StatelessWidget {
           ElevatedButton(
             onPressed: pickedFile == null ? null : () async {
               Navigator.pop(context);
-              // Call your upload logic here
-              // You'll need access to the DatabaseService instance
+              
               await DatabaseService().uploadModel(
                 nameController.text, 
                 pickedFile!.bytes!, 
@@ -55,7 +54,7 @@ class CatalogTab extends StatelessWidget {
 }
   @override
   Widget build(BuildContext context) {
-    // We use ChangeNotifierProvider here to initialize and provide the viewmodel
+    
     return ChangeNotifierProvider(
       create: (_) => CatalogViewModel()..loadCatalog(),
       child: Scaffold(
@@ -65,19 +64,18 @@ class CatalogTab extends StatelessWidget {
         ),
         body: Consumer<CatalogViewModel>(
           builder: (context, viewModel, child) {
-            // 1. Show loading spinner while fetching
+            
             if (viewModel.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            // 2. Show message if list is empty
+            
             if (viewModel.items.isEmpty) {
               return const Center(
                 child: Text("No models found. Try adding one!"),
               );
             }
 
-            // 3. Show list of items
             return ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: viewModel.items.length,
@@ -106,7 +104,7 @@ class CatalogTab extends StatelessWidget {
                     subtitle: Text("ID: ${item.id}"),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () {
-                      // TODO: Navigate to AR View or Details
+                      
                       print("Tapped on ${item.name}");
                       Navigator.push(
                       context,
@@ -122,7 +120,7 @@ class CatalogTab extends StatelessWidget {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _showUploadDialog(context), // Update this line
+          onPressed: () => _showUploadDialog(context), 
           child: const Icon(Icons.add),
         ),
       ),
