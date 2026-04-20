@@ -1,9 +1,16 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example.interior_design_ar">
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera.ar" android:required="true" />
     <application
         android:label="interior_design_ar"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
+        <meta-data android:name="com.google.ar.core" 
+                android:value="required"
+                tools:replace="android:value" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -43,7 +50,5 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
-
-    <uses-permission android:name="android.permission.CAMERA"/>
 
 </manifest>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1029833096928",
+    "project_id": "decorar-project",
+    "storage_bucket": "decorar-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029833096928:android:6e17eab1c18c6dd5795a85",
+        "android_client_info": {
+          "package_name": "com.example.interior_design_ar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTLa83StfoabICWDaQ1BrTRgcHPpI6XjI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

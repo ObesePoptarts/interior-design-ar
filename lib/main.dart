@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart'; // <--- 1. Import this file
+import 'ui/views/home_screen.dart';
 
-import 'viewmodels/navigation_viewmodel.dart';
-import 'views/splash_screen.dart';
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // 2. Update this line to include the options
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => NavigationViewModel(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'AR Decor App',
-        theme: ThemeData.dark(),
-        home: const SplashScreen(),
-      ),
+    return MaterialApp(
+      home: const HomeScreen(), // Cleaned up slightly
     );
   }
 }
