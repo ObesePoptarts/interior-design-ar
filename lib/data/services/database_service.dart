@@ -1,34 +1,28 @@
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/furniture_model.dart';
-import 'dart:typed_data'; 
 import 'package:firebase_storage/firebase_storage.dart';
+import '../models/furniture_model.dart';
 
 class DatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  // Uploads file to Storage, then saves metadata to Firestore
   Future<void> uploadModel(String name, Uint8List fileBytes, String fileName) async {
+    final ref = FirebaseStorage.instance.ref().child('models/${DateTime.now().millisecondsSinceEpoch}_$fileName');
+    await ref.putData(fileBytes);
+    final url = await ref.getDownloadURL();
+    
+    await _db.collection('furniture').add({
+      'name': name,
+      'modelUrl': url,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+  }
 
-  final ref = FirebaseStorage.instance.ref().child('models/${DateTime.now().millisecondsSinceEpoch}_$fileName');
-  
-  await ref.putData(fileBytes);
-  
-  final url = await ref.getDownloadURL();
-  
-  await FirebaseFirestore.instance.collection('furniture').add({
-    'name': name,
-    'modelUrl': url,
-  });
-}
-  Future<List<FurnitureModel>> fetchFurniture() async {
-    print("Fetching data from Firestore...");
-    try {
-      final snapshot = await _db.collection('furniture').get();
-      print("Fetch complete! Found ${snapshot.docs.length} documents.");
-      
+  // Returns a stream of furniture items for real-time updates
+  Stream<List<FurnitureModel>> streamFurniture() {
+    return _db.collection('furniture').snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => FurnitureModel.fromMap(doc.data(), doc.id)).toList();
-    } catch (e) {
-      print("ERROR IN FIRESTORE: $e"); 
-      return [];
-    }
+    });
   }
 }
