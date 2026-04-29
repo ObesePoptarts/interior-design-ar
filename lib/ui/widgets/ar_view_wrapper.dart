@@ -13,14 +13,12 @@ class ARViewWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // If running on web, show a friendly message instead of the ARView
     if (kIsWeb) {
       return const Center(
         child: Text("AR features are only available on physical mobile devices."),
       );
     }
     
-    // Only load the real ARView on mobile
     return ARView(
       onARViewCreated: onARViewCreated,
     );

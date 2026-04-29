@@ -27,7 +27,7 @@ class CatalogTab extends StatelessWidget {
                     const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () async {
-                        FilePickerResult? result = await FilePicker.pickFiles(type: FileType.any);
+                        FilePickerResult? result = await FilePicker.pickFiles(type: FileType.custom,allowedExtensions: ['glb', 'gltf'], withData: true);
                         if (result != null) {
                           setDialogState(() => pickedFile = result.files.first);
                         }
@@ -40,7 +40,15 @@ class CatalogTab extends StatelessWidget {
             if (!isUploading) ...[
               TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
               ElevatedButton(
-                onPressed: pickedFile == null ? null : () async {
+                onPressed: pickedFile == null || isUploading ? null : () async {
+
+                  if (pickedFile!.bytes == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Error: File Data is empty. Try a diffent File."))
+                    );
+                    return;
+                  }
+
                   setDialogState(() => isUploading = true);
                   try {
                     await DatabaseService().uploadModel(

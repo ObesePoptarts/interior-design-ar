@@ -14,10 +14,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    const HomeTab(),
+  List<Widget> get _pages => [
+    HomeTab(
+      onLoginPressed: () => setState(() => _currentIndex = 3),
+    ),
     const ArScreen(),
-    CatalogTab(), 
+    CatalogTab(),
     const UserTab(),
   ];
 

@@ -6,7 +6,6 @@ import '../models/furniture_model.dart';
 class DatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // Uploads file to Storage, then saves metadata to Firestore
   Future<void> uploadModel(String name, Uint8List fileBytes, String fileName) async {
     final ref = FirebaseStorage.instance.ref().child('models/${DateTime.now().millisecondsSinceEpoch}_$fileName');
     await ref.putData(fileBytes);
@@ -19,7 +18,6 @@ class DatabaseService {
     });
   }
 
-  // Returns a stream of furniture items for real-time updates
   Stream<List<FurnitureModel>> streamFurniture() {
     return _db.collection('furniture').snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => FurnitureModel.fromMap(doc.data(), doc.id)).toList();

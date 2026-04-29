@@ -26,7 +26,6 @@ class _ArScreenState extends State<ArScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("AR Furniture")),
-      // Use the wrapper here instead of raw ARView to prevent crashes
       body: ARViewWrapper(
         onARViewCreated: onARViewCreated,
       ),
@@ -72,7 +71,6 @@ class _ArScreenState extends State<ArScreen> {
   @override
   void dispose() {
     super.dispose();
-    // Always dispose of the session to prevent memory leaks
     arSessionManager?.dispose();
   }
 }

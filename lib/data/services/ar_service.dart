@@ -21,7 +21,7 @@ class MockARService implements ARService {
   Widget buildARView(Function(ARSessionManager, ARObjectManager, ARAnchorManager, ARLocationManager) onCreated) {
     return Container(
       color: Colors.grey[900],
-      child: const Center(child: Text("AR requires a physical mobile device")),
+      child: const Center(child: Text("AR requires a compatible physical mobile device")),
     );
   }
 }
