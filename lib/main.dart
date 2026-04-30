@@ -25,7 +25,6 @@ void main() async {
     }
   }
 
-
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),

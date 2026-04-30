@@ -6,7 +6,8 @@ import '../../data/services/database_service.dart';
 import 'ar_screen.dart';
 
 class CatalogTab extends StatelessWidget {
-  const CatalogTab({super.key});
+  final Function(String)? onModelSelected;
+  const CatalogTab({super.key, this.onModelSelected});
 
   void _showUploadDialog(BuildContext context) {
     final nameController = TextEditingController();
@@ -73,31 +74,40 @@ class CatalogTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isPicker = onModelSelected != null;
+
     return ChangeNotifierProvider(
       create: (_) => CatalogViewModel()..loadCatalog(),
       child: Scaffold(
-        appBar: AppBar(title: const Text("Furniture Catalog")),
+        appBar: isPicker ? null : AppBar(title: const Text("Furniture Catalog")),
         body: Consumer<CatalogViewModel>(
           builder: (context, viewModel, child) {
             if (viewModel.isLoading) return const Center(child: CircularProgressIndicator());
             
             return ListView.builder(
+              shrinkWrap: isPicker,
               itemCount: viewModel.items.length,
               itemBuilder: (context, index) {
                 final item = viewModel.items[index];
                 return ListTile(
                   leading: const Icon(Icons.chair),
                   title: Text(item.name),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => ArScreen(modelUrl: item.modelUrl)),
-                  ),
+                  onTap: () {
+                    if (onModelSelected != null) {
+                      onModelSelected!(item.modelUrl);
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_)=>ArScreen(modelUrl: item.modelUrl)),
+                      );
+                    }
+                  },
                 );
               },
             );
           },
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: isPicker? null : FloatingActionButton(
           onPressed: () => _showUploadDialog(context),
           child: const Icon(Icons.add),
         ),
